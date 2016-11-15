@@ -14,11 +14,11 @@ if ($_FILES["csvToUpload"]["size"] > 500000) {
 }
 if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
-} else {
-    echo "<table>\n\n";
-    if(move_uploaded_file($_FILES["csvToUpload"]["tmp_name"], $target_file)) {
-        $file = fopen($target_file, "r");
-        while (($line = fgetcsv($file)) !== false) {
+} elseif(move_uploaded_file($_FILES["csvToUpload"]["tmp_name"], $target_file)) {
+         echo "<table>\n\n";
+         $file = fopen($target_file, "r");
+         while(! feof($file)) {
+                $line = fgetcsv($file);
                 echo "<tr>";
                 foreach ($line as $cell) {
                         echo "<td>" . htmlspecialchars($cell) . "</td>";
